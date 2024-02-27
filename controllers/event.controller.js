@@ -8,10 +8,8 @@ const { Community } = require('../models/community.models')
 const createEvent = async (req, res) => {
     const userId = req.user.id;
     console.log(req.user)
-    const { title, description, startDate, endDate, address, city, zip, isPaid, price, image } = req.body
+    const { title, description, startDate, endDate, address, city, zip, isPaid, price, image, meetinglink } = req.body
 
-
-    if (!title || !description || !startDate || !endDate || !address || !city || !zip || !isPaid || !price) return res.status(400).json({ message: 'All fields are required' })
 
 
     const user = await User.findById(userId);
@@ -31,7 +29,8 @@ const createEvent = async (req, res) => {
         price,
         numberOfParticipants: 0,
         image,
-        userId
+        userId,
+        meetinglink
     })
 
     if (req.file) {
