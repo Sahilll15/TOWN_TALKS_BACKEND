@@ -14,7 +14,7 @@ const createDiscussion = async (req, res) => {
     try {
         const newDiscussion = new Discussion({
             content,
-            userId,
+            author: userId,
             communityId
         });
         await newDiscussion.save()
@@ -31,7 +31,7 @@ const createDiscussion = async (req, res) => {
 const getDiscussionByCommunityId = async (req, res) => {
     const communityId = req.params.id
     try {
-        const discussions = await Discussion.find({ communityId }).populate('userId', 'username')
+        const discussions = await Discussion.find({ communityId }).populate('author')
         res.status(200).json(discussions)
     }
     catch (error) {

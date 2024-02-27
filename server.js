@@ -1,6 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 require('dotenv').config()
+const cors = require('cors')
 
 const authRouter = require('./routes/user.routes')
 const eventRoutes = require('./routes/event.routes')
@@ -17,6 +18,8 @@ const PORT = process.env.PORT || 4000
 const MONGO_URL = process.env.MONGO_URL
 
 app.use(express.json())
+app.use(cors())
+app.use('/uploads', express.static('uploads'))
 
 app.use('/api/event', eventRoutes)
 app.use('/api/user', authRouter)
