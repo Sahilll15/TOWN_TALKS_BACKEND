@@ -1,15 +1,25 @@
-const { type } = require('express/lib/response')
 const mongoose = require('mongoose')
 
-const userSchema = new mongoose.schema({
+const userSchema = new mongoose.Schema({
     username: {
-        type: String
+        type: String,
+        required: true,
+        unique: true
     },
     email: {
-        type: String
+        type: String,
+        required:true
     },
     password: {
-        type: String
+        type: String,
+        required: true
+
+
+    },
+    typeOfUser:{
+        type: String,
+        enum: ['organizer', 'citizen','government'],
+    
     }
 })
 
