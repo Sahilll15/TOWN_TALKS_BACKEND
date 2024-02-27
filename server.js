@@ -1,7 +1,10 @@
 const express = require('express')
 const mongoose = require('mongoose')
 require('dotenv').config()
+
 const authRouter = require('./routes/user.routes')
+const eventRoutes = require('./routes/event.routes')
+
 
 
 const app = express()
@@ -10,6 +13,9 @@ const PORT = process.env.PORT || 4000
 const MONGO_URL = process.env.MONGO_URL
 
 app.use(express.json())
+
+app.use('/api/event', eventRoutes)
+app.use('/api/user',authRouter)
 
 mongoose.connect(MONGO_URL, {
     useNewUrlParser: true,
@@ -22,7 +28,7 @@ mongoose.connect(MONGO_URL, {
         console.log(err)
     })
 
-    app.use('/api/user',authRouter)
+    
 
 
 app.listen(PORT, () => {
