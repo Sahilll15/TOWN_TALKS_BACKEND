@@ -201,4 +201,11 @@ const deleteEvent = async (req, res) => {
 
 }
 
-module.exports = { createEvent, getEvents, joinEvent, leaveEvent, deleteEvent, getEventById }
+const getEventByUserID = async (req, res) => {
+    const userId = req.user.id;
+    const events = await Event.find({ userId: userId });
+    res.status(200).json(events);
+
+}
+
+module.exports = { createEvent, getEvents, joinEvent, leaveEvent, deleteEvent, getEventById, getEventById, getEventByUserID }
