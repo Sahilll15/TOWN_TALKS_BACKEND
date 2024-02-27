@@ -20,7 +20,6 @@ const userSchema = new mongoose.Schema({
         type: String,
         enum: ['organizer', 'citizen', 'government'],
         default: 'citizen'
-
     }
 })
 

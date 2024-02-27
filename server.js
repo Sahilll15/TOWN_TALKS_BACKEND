@@ -4,6 +4,7 @@ require('dotenv').config()
 
 const authRouter = require('./routes/user.routes')
 const eventRoutes = require('./routes/event.routes')
+const forumRoutes = require('./routes/forum.routes')
 
 
 
@@ -16,6 +17,8 @@ app.use(express.json())
 
 app.use('/api/event', eventRoutes)
 app.use('/api/user',authRouter)
+app.use('/api/forum',forumRoutes)
+
 
 mongoose.connect(MONGO_URL, {
     useNewUrlParser: true,
