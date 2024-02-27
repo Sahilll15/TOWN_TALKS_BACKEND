@@ -52,6 +52,19 @@ const getAllFeedback = async (req, res) => {
     }
 }
 
+const getFeedkbackdataByEventId = async (req, res) => {
+    try {
+        const feedbacks = await Feedback.find({ eventId: req.params.eventId })
+            .populate('userId');
+        res.json(feedbacks);
+
+    } catch (error) {
+        res.status(500).send({
+            message: "Error retrieving feedback: " + error.message
+        });
+    }
+}
+
 const getFeedbackDataForPiechart = async (req, res) => {
     try {
         const events = await Event.find({
@@ -88,5 +101,5 @@ const getFeedbackDataForPiechart = async (req, res) => {
     }
 }
 
-module.exports = { createFeedback, getAllFeedback, getFeedbackDataForPiechart };
+module.exports = { createFeedback, getAllFeedback, getFeedbackDataForPiechart, getFeedkbackdataByEventId };
 
