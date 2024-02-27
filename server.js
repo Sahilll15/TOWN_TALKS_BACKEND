@@ -8,6 +8,7 @@ const eventRoutes = require('./routes/event.routes')
 const forumRoutes = require('./routes/forum.routes')
 const feedbackRoutes = require('./routes/feedback.routes')
 const discussionRoutes = require('./routes/discussion.routes')
+const pollRouter = require('./routes/poll.routes')
 
 
 
@@ -26,6 +27,7 @@ app.use('/api/user', authRouter)
 app.use('/api/forum', forumRoutes)
 app.use('/api/feedback', feedbackRoutes)
 app.use('/api/discussion', discussionRoutes)
+app.use('/api/poll', pollRouter)
 
 
 
