@@ -4,39 +4,41 @@ const eventSchema = new mongoose.Schema({
 
     title: {
         type: String,
-        required: true
+
     },
     description: {
         type: String,
-        required: true
+
+    },
+    eventMode: {
+        type: String,
+
     },
     startDate: {
         type: Date,
-        required: true
+
     },
     endDate: {
         type: Date,
-        required: true
+
     },
     address: {
         type: String,
-        required: true
+
     },
     city: {
         type: String,
-        required: true
+
     },
     zip: {
         type: Number,
-        required: true
+
     },
     isPaid: {
         type: Boolean,
-        required: true
     },
     price: {
         type: Number,
-        required: true
     },
     numberOfParticipants: {
         type: Number,
@@ -47,7 +49,7 @@ const eventSchema = new mongoose.Schema({
     }],
     image: {
         type: String,
-        required: true
+
     },
     userId: {
         type: mongoose.Schema.Types.ObjectId,
@@ -56,7 +58,11 @@ const eventSchema = new mongoose.Schema({
     communityId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Community'
-    }
+    },
+    meetinglink: {
+        type: String
+    },
+
 })
 
 
