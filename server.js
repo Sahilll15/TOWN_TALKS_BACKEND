@@ -1,6 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 require('dotenv').config()
+const eventRoutes = require('./routes/event.routes')
 
 
 const app = express()
@@ -9,6 +10,8 @@ const PORT = process.env.PORT || 4000
 const MONGO_URL = process.env.MONGO_URL
 
 app.use(express.json())
+
+app.use('/api/event', eventRoutes)
 
 mongoose.connect(MONGO_URL, {
     useNewUrlParser: true,
