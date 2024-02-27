@@ -40,8 +40,11 @@ const eventSchema = new mongoose.Schema({
     },
     numberOfParticipants: {
         type: Number,
-        required: true
     },
+    participants: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }],
     image: {
         type: String,
         required: true

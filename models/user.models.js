@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        required:true
+        required: true
     },
     password: {
         type: String,
@@ -16,10 +16,11 @@ const userSchema = new mongoose.Schema({
 
 
     },
-    typeOfUser:{
+    typeOfUser: {
         type: String,
-        enum: ['organizer', 'citizen','government'],
-    
+        enum: ['organizer', 'citizen', 'government'],
+        default: 'citizen'
+
     }
 })
 
