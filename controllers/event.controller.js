@@ -91,6 +91,24 @@ const getEvents = async (req, res) => {
     }
 }
 
+const getEventById = async (req, res) => {
+    try {
+        const eventId = req.params.id;
+        
+        const event = await Event.findById(eventId);
+        
+        if (!event) {
+            return res.status(404).json({ message: 'Event not found' });
+        }
+
+        res.json(event);
+    } catch (error) {
+        res.status(500).send({
+            message: "Error retrieving event: " + error.message
+        });
+    }
+}
+
 
 const joinEvent = async (req, res) => {
     const eventId = req.params.id;
@@ -183,4 +201,4 @@ const deleteEvent = async (req, res) => {
 
 }
 
-module.exports = { createEvent, getEvents, joinEvent, leaveEvent, deleteEvent }
+module.exports = { createEvent, getEvents, joinEvent, leaveEvent, deleteEvent,getEventById }
