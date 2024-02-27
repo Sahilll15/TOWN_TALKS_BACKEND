@@ -1,5 +1,5 @@
 
-export const gmailContent = (verificationToken, username) => {
+ const gmailContent = (verificationToken, username) => {
     return `
         <html>
             <head>
@@ -38,7 +38,8 @@ export const gmailContent = (verificationToken, username) => {
     `;
 };
 
-export const eventCreationEmailContent = (eventDetails) => {
+
+ const eventCreationEmailContent = (eventDetails) => {
     return `
         <html>
             <head>
@@ -64,10 +65,17 @@ export const eventCreationEmailContent = (eventDetails) => {
             <body>
                 <div class="container">
                     <p>Dear Organizer,</p>
-                    <p>Your event ${eventDetails.eventName} has been created successfully. Details:</p>
-                    <p>Event Name: ${eventDetails.eventName}</p>
-                    <p>Date: ${eventDetails.eventDate}</p>
-                    <p>Location: ${eventDetails.eventLocation}</p>
+                    <p>Your event ${eventDetails.title} has been created successfully. Details:</p>
+                    <p>Event Name: ${eventDetails.title}</p>
+                    <p>Description: ${eventDetails.description}</p>
+                    <p>Start Date: ${eventDetails.startDate}</p>
+                    <p>End Date: ${eventDetails.endDate}</p>
+                    <p>Address: ${eventDetails.address}</p>
+                    <p>City: ${eventDetails.city}</p>
+                    <p>Zip Code: ${eventDetails.zip}</p>
+                    <p>Is Paid: ${eventDetails.isPaid ? 'Yes' : 'No'}</p>
+                    <p>Price: ${eventDetails.price}</p>
+                    <p>Number of Participants: ${eventDetails.numberOfParticipants}</p>
                     <p>Regards,</p>
                     <p>Your Organization</p>
                 </div>
@@ -76,7 +84,8 @@ export const eventCreationEmailContent = (eventDetails) => {
     `;
 };
 
-export const citizenJoinEventEmailContent = (eventDetails) => {
+
+ const citizenJoinEventEmailContent = (eventDetails) => {
     return `
         <html>
             <head>
@@ -100,16 +109,25 @@ export const citizenJoinEventEmailContent = (eventDetails) => {
                 </style>
             </head>
             <body>
-                <div class="container">
-                    <p>Dear Citizen,</p>
-                    <p>You have successfully joined the event ${eventDetails.eventName}. Details:</p>
-                    <p>Event Name: ${eventDetails.eventName}</p>
-                    <p>Date: ${eventDetails.eventDate}</p>
-                    <p>Location: ${eventDetails.eventLocation}</p>
-                    <p>Regards,</p>
-                    <p>Your Organization</p>
+            <div class="container">
+            <p>Dear Citizen,</p>
+            <p>Your event ${eventDetails.title} has been created successfully. Details:</p>
+            <p>Event Name: ${eventDetails.title}</p>
+            <p>Description: ${eventDetails.description}</p>
+            <p>Start Date: ${eventDetails.startDate}</p>
+            <p>End Date: ${eventDetails.endDate}</p>
+            <p>Address: ${eventDetails.address}</p>
+            <p>City: ${eventDetails.city}</p>
+            <p>Zip Code: ${eventDetails.zip}</p>
+            <p>Is Paid: ${eventDetails.isPaid ? 'Yes' : 'No'}</p>
+            <p>Price: ${eventDetails.price}</p>
+            <p>Number of Participants: ${eventDetails.numberOfParticipants}</p>
+            <p>Regards,</p>
+            <p>Your Organization</p>
                 </div>
             </body>
         </html>
     `;
 };
+
+module.exports = { gmailContent, eventCreationEmailContent, citizenJoinEventEmailContent };

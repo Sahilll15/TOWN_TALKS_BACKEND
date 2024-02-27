@@ -1,5 +1,6 @@
 const { Event } = require('../models/event.models')
 const { User } = require('../models/user.models')
+const { sendVerificationEmail, generateVerificationToken, citizenJoinEventEmail, organizerEventMail }= require('../utils/email')
 const z = require('zod')
 
 
@@ -38,6 +39,22 @@ const createEvent = async (req, res) => {
 
     try {
         await event.save()
+        const eventDetails={
+            title:event.title,
+            description:event.description,
+            startDate:event.startDate,
+            endDate:event.endDate,
+            address:event.address,
+            city:event.city,
+            zip:event.zip,
+            isPaid:event.isPaid,
+            price:event.price,
+            numberOfParticipants:event.numberOfParticipants
+    
+        }
+        await organizerEventMail(user.email,eventDetails)
+            .then(()=>console.log('Email sent'))
+            .catch((err)=> console.log('Error:',err));
         res.status(201).json(event)
     } catch (error) {
         res.status(400).json({ message: error.message })
@@ -65,6 +82,7 @@ const joinEvent = async (req, res) => {
 
     const user = await User.findById(userId);
     if (!user) return res.status(404).json({ message: 'User not found' });
+    
 
     // if (event.numberOfParticipants >= event.maxParticipants) return res.status(400).json({ message: 'Event is full' });
 
@@ -72,6 +90,23 @@ const joinEvent = async (req, res) => {
     event.participants.push(userId);
 
     await event.save();
+
+    const eventDetails={
+        title:event.title,
+        description:event.description,
+        startDate:event.startDate,
+        endDate:event.endDate,
+        address:event.address,
+        city:event.city,
+        zip:event.zip,
+        isPaid:event.isPaid,
+        price:event.price,
+        numberOfParticipants:event.numberOfParticipants
+
+    }
+    await citizenJoinEventEmail(user.email,eventDetails)
+        .then(()=>console.log('Email sent'))
+        .catch((err)=> console.log('Error:',err));
     res.status(200).json(event);
 }
 

@@ -1,15 +1,15 @@
-import nodemailer from 'nodemailer';
-import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
-import { gmailContent, eventCreationEmailContent, citizenJoinEventEmailContent } from './emailTemplate.js'; // Assuming you have email templates
-dotenv.config();
+const nodemailer = require('nodemailer');
+const jwt = require('jsonwebtoken')
+require("dotenv").config();
+
+const { gmailContent, eventCreationEmailContent, citizenJoinEventEmailContent } = require('./emailTemplate.js'); // Assuming you have email templates
 const secret_key = process.env.JWT_SECRET;
 
-export const generateVerificationToken = (email) => {
+ const generateVerificationToken = (email) => {
     return jwt.sign({ email: email }, secret_key, { expiresIn: '1d' })
 }
 
-export const sendVerificationEmail = async (recipientEmail, verificationToken, username) => {
+ const sendVerificationEmail = async (recipientEmail, verificationToken, username) => {
     try {
         const transporter = nodemailer.createTransport({
             service: 'gmail',
@@ -36,7 +36,7 @@ export const sendVerificationEmail = async (recipientEmail, verificationToken, u
 }
 
 // When a citizen joins an event
-export const citizenJoinEventEmail = async (recipientEmail, eventDetails) => {
+ const citizenJoinEventEmail = async (recipientEmail, eventDetails) => {
     try {
         const transporter = nodemailer.createTransport({
             service: 'gmail',
@@ -55,7 +55,7 @@ export const citizenJoinEventEmail = async (recipientEmail, eventDetails) => {
             html: emailContent
         })
 
-        console.log("Citizen join event email has been sent");
+        console.log("Citizen join event email has been sent",recipientEmail);
 
     } catch (error) {
         console.error('Error sending citizen join event email:', error);
@@ -63,7 +63,7 @@ export const citizenJoinEventEmail = async (recipientEmail, eventDetails) => {
 }
 
 // When an organizer creates an event
-export const organizerEventMail = async (recipientEmail, eventDetails) => {
+ const organizerEventMail = async (recipientEmail, eventDetails) => {
     try {
         const transporter = nodemailer.createTransport({
             service: 'gmail',
@@ -88,3 +88,5 @@ export const organizerEventMail = async (recipientEmail, eventDetails) => {
         console.error('Error sending event creation email:', error);
     }
 }
+
+module.exports = { sendVerificationEmail, generateVerificationToken, citizenJoinEventEmail, organizerEventMail };
