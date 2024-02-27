@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs');
-const {User} = require('../models/user.models')
+const { User } = require('../models/user.models')
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
@@ -16,7 +16,7 @@ const register = async (req, res) => {
         const plainPassword = req.body.password;
         const salt = await bcrypt.genSalt(10);
         const encryptedPassword = await bcrypt.hash(plainPassword, salt);
-        
+
         req.body.password = encryptedPassword;
 
         const newUser = new User(req.body);
@@ -32,7 +32,7 @@ const register = async (req, res) => {
 // Login a user
 const login = async (req, res) => {
     try {
-        const user = await User.findOne({ email: req.body.email }); 
+        const user = await User.findOne({ email: req.body.email });
         if (!user) {
             return res.status(200).send({ message: 'Invalid email or password', success: false });
         }
@@ -40,12 +40,12 @@ const login = async (req, res) => {
         if (!isMatch) {
             return res.status(200).send({ message: 'Invalid email or password', success: false });
         }
-        else{
+        else {
             const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
                 expiresIn: '1d',
             });
-            res.status(200).send({ message: 'Logged in successfully', success: true,data:token });
-        
+            res.status(200).send({ message: 'Logged in successfully', success: true, data: token });
+
         }
 
     } catch (error) {
@@ -57,12 +57,12 @@ const login = async (req, res) => {
 //Get user details by id
 const getUserId = async (req, res) => {
     try {
-        const user = await User.findOne({_id:req.body.userId});
-        user.password=undefined
+        const user = await User.findOne({ _id: req.body.userId });
+        user.password = undefined
         if (!user) {
             return res.status(200).send({ message: 'User not found', success: false });
-        }else{
-            return res.status(200).send({  success: true,data:user});
+        } else {
+            return res.status(200).send({ success: true, data: user });
         }
     } catch (error) {
         console.log(error);
@@ -70,4 +70,4 @@ const getUserId = async (req, res) => {
     }
 };
 
-module.exports = { register, login,getUserId };
+module.exports = { register, login, getUserId };
