@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const User = require('./user.models');
 
 const forumSchema = mongoose.Schema({
     content: {

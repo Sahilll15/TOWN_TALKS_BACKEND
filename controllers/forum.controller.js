@@ -1,19 +1,7 @@
 const Forum = require('../models/forums.models');
-const User = require('../models/user.models');
-// const { badges } = require('../utils/CheckBadges')
-// const fs = require('fs');
-// const path = require('path')
-// const AWS = require('aws-sdk')
+const { User } = require('../models/user.models');
 require('dotenv').config();
 
-
-// AWS.config.update({
-//     accessKeyId: process.env.AWS_ACCESS_KEY,
-//     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-//     region: 'ap-south-1'
-// });
-
-// const s3 = new AWS.S3();
 
 const createforum = async (req, res) => {
     const { content, tags } = req.body;
@@ -36,57 +24,18 @@ const createforum = async (req, res) => {
             author: author
         });
 
-
-
         if (req.file) {
-            const file = req.file;
-            const fileKey = Date.now() + '-' + file.originalname;
+            forum.media = req.file.path;
 
-            const params = {
-                Bucket: process.env.AWS_BUCKET_NAME,
-                Key: fileKey,
-                Body: file.buffer,
-                ContentType: file.mimetype,
-            };
-
-
-            await s3.upload(params, async (error, data) => {
-                if (error) {
-                    console.log(error);
-                    return res.status(500).json({ error: error.message });
-                }
-
-                if (data) {
-                    forum.media = data.Location;
-                }
-
-                // Save the forum here after potentially setting the media property
-                await forum.save();
-
-                // Rest of your code for updating user and other actions
-                console.log('Adding points....');
-                user.points += 10;
-                console.log('Added points....');
-                console.log(user.points);
-                await badges(user);
-                user.forumsShowcased.push(forum._id);
-                await user.save();
-
-                res.status(201).json({ forum, user, msg: "New forum created" });
-            });
-        } else {
-            // If there is no file, save the forum without the media property
             await forum.save();
+            res.status(200).json({
+                forum,
+                user,
+                msg: "New forum created with media"
 
-            // Rest of your code for updating user and other actions
-            console.log('Adding points....');
-            user.points += 10;
-            console.log('Added points....');
-            console.log(user.points);
-            await badges(user);
-            user.forumsShowcased.push(forum._id);
-            await user.save();
-
+            })
+        } else {
+            await forum.save();
             res.status(201).json({ forum, user, msg: "New forum created" });
         }
     } catch (error) {
@@ -144,10 +93,10 @@ const deleteforum = async (req, res) => {
 const getforums = async (req, res) => {
     try {
         const forums = await Forum.find().sort({ createdAt: -1 }).populate('author');
-        const validforums = forums.filter(forum => forum.author && forum.author);
-        const numberOfforums = validforums.length;
+        // const validforums = forums.filter(forum => forum.author && forum.author);
+        const numberOfforums = forums.length;
 
-        res.status(200).json({ forums: validforums, mssg: "forums fetched successfully", qty: numberOfforums });
+        res.status(200).json({ forums: forums, mssg: "forums fetched successfully", qty: numberOfforums });
     } catch (error) {
         res.status(500).json({ error: error.message });
         console.log(error);
