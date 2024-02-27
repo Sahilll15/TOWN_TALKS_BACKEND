@@ -19,6 +19,7 @@ const userSchema = new mongoose.Schema({
     typeOfUser:{
         type: String,
         enum: ['organizer', 'citizen','government'],
+        default: 'citizen'
     
     }
 })
