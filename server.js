@@ -1,6 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 require('dotenv').config()
+const authRouter = require('./routes/user.routes')
 
 
 const app = express()
@@ -20,6 +21,8 @@ mongoose.connect(MONGO_URL, {
     .catch((err) => {
         console.log(err)
     })
+
+    app.use('/api/user',authRouter)
 
 
 app.listen(PORT, () => {

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const userSchema = new mongoose.schema({
+const userSchema = new mongoose.Schema({
     username: {
         type: String,
         required: true,
@@ -12,6 +12,7 @@ const userSchema = new mongoose.schema({
     },
     password: {
         type: String,
+        required: true
 
 
     },
