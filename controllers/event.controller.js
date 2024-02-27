@@ -1,9 +1,16 @@
 const { Event } = require('../models/event.models')
+const { User } = require('../models/user.models')
 const z = require('zod')
 
 
 const createEvent = async (req, res) => {
-    const { title, description, startDate, endDate, address, city, zip, isPaid, price, numberOfParticipants, image, userId } = req.body
+    const userId = req.user.id;
+    const { title, description, startDate, endDate, address, city, zip, isPaid, price, numberOfParticipants, image } = req.body
+
+
+    const user = await User.findById(userId);
+
+    if (!user) return res.status(404).json({ message: 'User not found' })
 
 
     const schema = z.object({
@@ -21,15 +28,11 @@ const createEvent = async (req, res) => {
         userId: z.string().nonempty()
     })
 
-
-
     const correctBody = schema.parse(req.body)
 
     if (!correctBody) {
         return res.status(400).json({ message: 'Invalid input' })
     }
-
-
     const event = new Event({
         title,
         description,
