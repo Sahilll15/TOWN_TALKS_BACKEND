@@ -13,7 +13,7 @@ const createCommunity = async (name, description, eventId, userId, image) => {
 
     await newCommunity.save()
 
-
+    return newCommunity
 }
 
 const getCommunites = async (req, res) => {
@@ -36,6 +36,7 @@ const getCommunityByid = async (req, res) => {
         res.status(500).json({ error: error.message })
     }
 }
+
 
 
 
