@@ -5,6 +5,7 @@ require('dotenv').config()
 const authRouter = require('./routes/user.routes')
 const eventRoutes = require('./routes/event.routes')
 const forumRoutes = require('./routes/forum.routes')
+const discussionRoutes = require('./routes/discussion.routes')
 
 
 
@@ -16,8 +17,9 @@ const MONGO_URL = process.env.MONGO_URL
 app.use(express.json())
 
 app.use('/api/event', eventRoutes)
-app.use('/api/user',authRouter)
-app.use('/api/forum',forumRoutes)
+app.use('/api/user', authRouter)
+app.use('/api/forum', forumRoutes)
+app.use('/api/discussion', discussionRoutes)
 
 
 mongoose.connect(MONGO_URL, {
@@ -31,7 +33,7 @@ mongoose.connect(MONGO_URL, {
         console.log(err)
     })
 
-    
+
 
 
 app.listen(PORT, () => {
