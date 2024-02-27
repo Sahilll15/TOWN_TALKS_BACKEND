@@ -19,9 +19,9 @@ const MONGO_URL = process.env.MONGO_URL
 app.use(express.json())
 
 app.use('/api/event', eventRoutes)
-app.use('/api/user',authRouter)
-app.use('/api/forum',forumRoutes)
-app.use('/api/feedback',feedbackRoutes)
+app.use('/api/user', authRouter)
+app.use('/api/forum', forumRoutes)
+app.use('/api/feedback', feedbackRoutes)
 app.use('/api/discussion', discussionRoutes)
 
 

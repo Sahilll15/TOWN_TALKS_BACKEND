@@ -6,8 +6,9 @@ require('dotenv').config();
 
 // Register a new user
 const register = async (req, res) => {
+    const { email, password, typeOfUser } = req.body;
     try {
-        const userExist = await User.findOne({ email: req.body.email });
+        const userExist = await User.findOne({ email: req.body.email.toLowerCase() });
 
         if (userExist) {
             return res.status(400).send({ message: 'User already exists', success: false });
@@ -19,7 +20,12 @@ const register = async (req, res) => {
 
         req.body.password = encryptedPassword;
 
-        const newUser = new User(req.body);
+        const newUser = new User({
+            email: email.toLowerCase(),
+            password: encryptedPassword,
+            typeOfUser
+
+        });
         await newUser.save();
 
         res.status(200).send({ message: 'User registered successfully', success: true });
