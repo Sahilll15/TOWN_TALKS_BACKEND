@@ -7,7 +7,7 @@ module.exports = async (req, res, next) => {
         let authHeader = req.headers.Authorization || req.headers.authorization;
         token = authHeader?.split(" ")[1];
 
-        console.log('token', token)
+        // console.log('token', token)
 
         if (!token) res.status(401).send({ message: "Access denied", success: false });
 

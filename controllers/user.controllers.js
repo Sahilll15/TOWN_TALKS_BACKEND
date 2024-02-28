@@ -77,4 +77,26 @@ const getUserId = async (req, res) => {
     }
 };
 
-module.exports = { register, login, getUserId };
+const getOragniser = async (req, res) => {
+    try {
+        const user = req.user.id;
+
+        const organiser = await User.findById(user)
+
+
+        if (organiser.typeOfUser !== 'organizer') {
+            return res.status(200).send({ message: 'User is not an organiser', success: false });
+        }
+
+        if (!organiser) {
+            return res.status(200).send({ message: 'User not found', success: false });
+        } else {
+            return res.status(200).send({ success: true, data: organiser });
+        }
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+module.exports = { register, login, getUserId, getOragniser };
