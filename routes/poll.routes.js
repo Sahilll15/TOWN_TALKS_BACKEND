@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const {
     createPoll, getAllPolls, getPollById, answerPolls, getAll, getanswerPollById, answerOptions,
-    getAnswerbyPollId
+    getAnswerbyPollId, getPollPieChartbyPollId
 } = require('../controllers/polls.controller');
 const authMiddleware = require('../middlewares/verification.middleware');
 
@@ -17,6 +17,9 @@ router.post('/answerPolls/:pollId', authMiddleware, answerPolls);
 router.get('/getAll', getAll);
 // router.get('/getanswerPollById/:id',authMiddleware, getanswerPollById);
 router.get('/getanswerByPollId/:pollId', authMiddleware, getAnswerbyPollId);
+router.get('/getPollPieChart/:pollId', getPollPieChartbyPollId);
+
+
 
 
 
