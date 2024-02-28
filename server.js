@@ -55,7 +55,7 @@ app.post('/api/create-payment-session', async (req, res) => {
                     product_data: {
                         name: 'Product Name',
                     },
-                    unit_amount: price,
+                    unit_amount: price * 100,
                 },
                 quantity: 1,
             }],
